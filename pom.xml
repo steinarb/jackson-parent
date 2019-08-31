@@ -54,6 +54,9 @@
   </scm>
 
   <properties>
+    <jackson.version.annotations>2.10.0</jackson.version.annotations>
+    <karaf.version>4.2.7</karaf.version>
+
     <!-- 02-Oct-2015, tatu: Jackson 2.4 and above are Java 6 (earlier versions Java 5);
           Jackson 2.7 and above Java 7 (with exception of `jackson-core`/`jackson-annotations` still Java 6),
       -->
@@ -200,6 +203,27 @@
               </pluginExecutions>
             </lifecycleMappingMetadata>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.karaf.tooling</groupId>
+          <artifactId>karaf-maven-plugin</artifactId>
+          <version>${karaf.version}</version>
+          <extensions>true</extensions>
+          <configuration>
+            <startLevel>80</startLevel>
+            <includeTransitiveDependency>false</includeTransitiveDependency>
+            <aggregateFeatures>false</aggregateFeatures>
+            <includeProjectArtifact>true</includeProjectArtifact>
+          </configuration>
+          <executions>
+            <execution>
+              <id>generate-features-file</id>
+              <phase>package</phase>
+              <goals>
+                <goal>features-generate-descriptor</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
